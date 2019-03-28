@@ -1,12 +1,29 @@
 class Api::ProfilesController < ApplicationController
   before_action :authenticate_user!
 
-  def index
-    render json: User.random_profile(current_user.liked_profiles)
+  def show
+    render json: current_user.profile
+  end
+
+  def create
+    profile = current_user.profile.new
+    if profile.save(profile_params)
+      render json: profile
+    else
+      render json: profile.errors, status: 422
+    end
   end
 
   def update
-    current_user.liked_profiles << params[:id].to_i
-    current_user.save
+    if current_user.profile.update(profile_params)
+      render json: current_user.profile
+    else
+      render json: profile.errors, status: 422
+  end
+
+  private
+
+  def profile_params
+    params.require(:profile).permit(:firstName, :lastName, :avatar, :birthdate)
   end
 end
