@@ -31,10 +31,10 @@ class Api::ProfilesController < ApplicationController
     end
   end
 
-  def friend
-    current_user.liked_profiles << params[:id].to_i
-    current_user.save
-  end
+  # def friend
+  #   current_user.liked_profiles << params[:id].to_i
+  #   current_user.save
+  # end
 
   private
 

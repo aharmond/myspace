@@ -5,7 +5,7 @@ import { AuthConsumer, } from '../providers/AuthProvider';
 import { Segment, Header, Divider, Image, Button, } from 'semantic-ui-react';
 
 class Profile extends React.Component {
-  state = { profile: {}, }
+  state = { profile: {}, showPost: false }
 
   componentDidMount() {
     axios.get(`/api/users/${this.props.auth.user.id}/profiles`)
@@ -18,18 +18,21 @@ class Profile extends React.Component {
     this.setState({ profile: data })
   }
 
+  togglePost = () => this.setState({ showPost: !this.state.showPost })
+
   render() {
     const { firstName, lastName, birthdate, avatar } = this.state.profile
 
     return (
       <>
-        <Segment textAlign='center'>
+        <Segment textAlign='center' floated='left'>
           <Image src={avatar} />
           <Header  size='large' content={`${firstName} ${lastName}`} />
           <Header size='small' content={birthdate} />
+        <Button onClick={this.togglePost} color="green" content="New Post"/>
         </Segment>
         <Divider />
-        <Button as={Link} to='/profile/index' content='See profiles' />
+        <Button as={Link} to='/profile/index' content='See profiles' floated="right"/>
       </>
     )
   }
