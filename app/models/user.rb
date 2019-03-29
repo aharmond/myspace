@@ -10,4 +10,9 @@ class User < ActiveRecord::Base
   serialize :liked_profiles, Array
 
   has_many :profiles, dependent: :destroy
+
+  def self.liked(ids)
+    ids = ids.empty ? [0] : ids
+    Profile.where("id IN (?)", ids)
+  end
 end
