@@ -9,5 +9,5 @@ class User < ActiveRecord::Base
 
   serialize :liked_profiles, Array
 
-  has_one :profile, dependent: :delete
+  has_many :profiles, dependent: :destroy
 end

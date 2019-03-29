@@ -1,12 +1,21 @@
 import React from 'react';
 import { Link, } from 'react-router-dom';
-import { ProfileConsumer, } from '../providers/ProfileProvider';
+import axios from 'axios';
+import { AuthConsumer, } from '../providers/AuthProvider';
 import { Segment, Header, Divider, Image, Button, } from 'semantic-ui-react';
 
 class Profile extends React.Component {
+  state = { profile: {}, }
 
   componentDidMount() {
-    this.props.getProfile(this.props.profile.id)
+    axios.get(`/api/users/${this.props.auth.user.id}/profiles`)
+      .then( res => {
+        this.setProfile(...res.data)
+    })
+  }
+
+  setProfile = (data) => {
+    this.setState({ profile: data })
   }
 
   render() {
@@ -29,9 +38,9 @@ class Profile extends React.Component {
 export default class ConnectedProfile extends React.Component {
   render() {
     return (
-      <ProfileConsumer>
-        { value => <Profile { ...this.props } value={value} />}
-      </ProfileConsumer>
+      <AuthConsumer>
+        { auth => <Profile { ...this.props } auth={auth} />}
+      </AuthConsumer>
     )
   }
 }

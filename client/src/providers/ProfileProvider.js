@@ -5,24 +5,14 @@ const ProfileContext = React.createContext();
 export const ProfileConsumer = ProfileContext.Consumer;
 
 export class ProfileProvider extends React.Component {
-  state = { profile: {}, profiles: [], };
+  state = { profile: [], profiles: [], };
 
-  createProfile = ( profile, history ) => {
+  createProfile = ( profile, history, user_id ) => {
     profile = {...profile, avatar: `https://robohash.org/${profile.lastName}`}
-    axios.post('/api/profiles', profile)
+    axios.post(`/api/users/${user_id}/profiles`, profile)
       .then( res => {
         this.setState({ profile: res.data })
         history.push('/profile');
-      })
-      .catch( res => {
-        console.log(res)
-      })
-  }
-
-  getProfile = (id) => {
-    axios.get(`/api/profiles/${id}`)
-      .then( res => {
-        this.setState({ profile: res.data })
       })
       .catch( res => {
         console.log(res)

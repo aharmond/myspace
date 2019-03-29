@@ -13,12 +13,12 @@ class ProfileForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const profile = this.state
-    this.props.value.createProfile(profile, this.props.history);
+    this.props.value.createProfile(profile, this.props.history, this.props.user_id);
   }
 
   render() {
     const { firstName, lastName, birthdate, } = this.state
-    
+
     return (
       <Segment basic>
         <Header size='huge' textAlign='center'>Finish Profile</Header>
