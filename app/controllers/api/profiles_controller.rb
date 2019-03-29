@@ -10,7 +10,7 @@ class Api::ProfilesController < ApplicationController
   end
 
   def show
-    render json: current_user.profiles
+    render json: Profile.find(params[:id])
   end
 
   def create

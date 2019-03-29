@@ -9,12 +9,8 @@ class ProfileView extends React.Component {
   componentDidMount() {
     axios.get(`/api/profiles/${this.props.match.params.id}`)
       .then( res => {
-        this.setProfile(res.data)
+        this.setState({ profile: {...res.data} })
     })
-  }
-
-  setProfile = (data) => {
-    this.setState({ profile: data })
   }
 
   render() {
@@ -27,7 +23,7 @@ class ProfileView extends React.Component {
           <Header  size='large' content={`${firstName} ${lastName}`} />
           <Header size='small' content={birthdate} />
         </Segment>
-        <Divider />
+          <Divider />
         <Button as={Link} to='/profile/index' content='See profiles' />
       </>
     )
